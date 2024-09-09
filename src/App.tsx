@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 import "./App.css";
 
+//components
+import StickyList from "./components/StickyList";
+
 //Custom hook
 import { useTitle } from "./hooks/useTitle";
 
@@ -12,7 +15,11 @@ function App() {
     useTitle(NAMETITLEPROJECT.titlePage);
   }, []);
 
-  return <></>;
+  return (
+    <>
+      <StickyList />
+    </>
+  );
 }
 
 export default App;
