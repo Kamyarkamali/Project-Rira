@@ -1,6 +1,9 @@
 import { FC, useRef, useState } from "react";
 
-const StickyList: FC = () => {
+//interface-function
+import { StickyListProps } from "../types/interface";
+
+const StickyList: FC<StickyListProps> = ({ onClose }) => {
   const [move, setMove] = useState<boolean>(false);
 
   const [tx, setTx] = useState<number>(0);
@@ -18,8 +21,6 @@ const StickyList: FC = () => {
       setTx(e.clientX - dimensions?.x);
       setTy(e.clientY - dimensions?.y);
     }
-
-    console.log(tx, ty);
   };
 
   const haneleMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -45,7 +46,10 @@ const StickyList: FC = () => {
     >
       <div className="w-[120%] p-[10px] mt-9 rounded-md rounded-b-none bg-[#04D1F1] flex items-center justify-between">
         <div className="text-xl font-bold">یاد آوری های من</div>
-        <div className="text-2xl bg-red-300 hover:opacity-[0.5] duration-300 rounded-[100%] w-[40px] h-[40px] grid text-red-500 place-content-center">
+        <div
+          onClick={onClose}
+          className="text-2xl bg-red-300 hover:opacity-[0.5] duration-300 rounded-[100%] w-[40px] h-[40px] grid text-red-500 place-content-center"
+        >
           &times;
         </div>
       </div>

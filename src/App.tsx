@@ -1,5 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
+
+// alert-notification-react-hot toast
+import toast, { Toaster } from "react-hot-toast";
 
 //components
 import StickyList from "./components/StickyList";
@@ -8,16 +11,45 @@ import StickyList from "./components/StickyList";
 import { useTitle } from "./hooks/useTitle";
 
 //types/enums
-import { NAMETITLEPROJECT } from "./types/enum/enums";
+import { NAMETITLEPROJECT, REACT_TOAST } from "./types/enum/enums";
+
+//types/interface
+import { Note } from "./types/interface";
 
 function App() {
+  const [write, setWrite] = useState<Note[]>([]);
+
+  const writeNote = () => {
+    setWrite([
+      ...write,
+      {
+        id: Date.now(),
+      },
+    ]);
+    toast.success(REACT_TOAST.add);
+  };
+
   useEffect(() => {
     useTitle(NAMETITLEPROJECT.titlePage);
   }, []);
 
+  const removeMyNotes = (id: number) => {
+    setWrite(write.filter((node) => node.id !== id));
+    toast.error(REACT_TOAST.remove);
+  };
+
   return (
     <>
-      <StickyList />
+      <button
+        onClick={writeNote}
+        className="bg-blue-500 cursor-pointer p-2 text-[#ffff] font-bold mt-4 mr-4 rounded-md hover:scale-105 duration-300 "
+      >
+        اضافه کردن نوشته +
+      </button>
+      {write.map((items) => (
+        <StickyList key={items.id} onClose={() => removeMyNotes(items.id)} />
+      ))}
+      <Toaster />
     </>
   );
 }
