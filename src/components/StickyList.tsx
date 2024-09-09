@@ -1,13 +1,39 @@
-import { FC } from "react";
+import { FC, useRef, useState } from "react";
 
 const StickyList: FC = () => {
+  const [move, setMove] = useState<boolean>(false);
+
+  const [tx, setTx] = useState<number>(0);
+  const [ty, setTy] = useState<number>(0);
+
+  const refElement = useRef<HTMLDivElement | null>(null);
+
   // functions move
 
-  const haneleDown = () => {};
+  const haneleDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    setMove(true);
+    const dimensions = refElement.current?.getBoundingClientRect();
 
-  const haneleMove = () => {};
+    if (dimensions) {
+      setTx(e.clientX - dimensions?.x);
+      setTy(e.clientY - dimensions?.y);
+    }
 
-  const haneleUp = () => {};
+    console.log(tx, ty);
+  };
+
+  const haneleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (move && refElement.current) {
+      let x = e.clientX - tx;
+      let y = e.clientY - ty;
+      refElement.current.style.left = x + "px";
+      refElement.current.style.top = y + "px";
+    }
+  };
+
+  const haneleUp = () => {
+    setMove(false);
+  };
 
   return (
     <div
@@ -15,6 +41,7 @@ const StickyList: FC = () => {
       onMouseDown={haneleDown}
       onMouseMove={haneleMove}
       onMouseUp={haneleUp}
+      ref={refElement}
     >
       <div className="w-[120%] p-[10px] mt-9 rounded-md rounded-b-none bg-[#04D1F1] flex items-center justify-between">
         <div className="text-xl font-bold">یاد آوری های من</div>
