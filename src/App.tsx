@@ -49,6 +49,7 @@ function App() {
       </button>
       {write.map((items) => (
         <StickyList
+          createdDate={Date.now() + 60000}
           key={items.id}
           deadline={items.deadline}
           onClose={() => removeMyNotes(items.id)}
