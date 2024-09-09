@@ -24,6 +24,7 @@ function App() {
       ...write,
       {
         id: Date.now(),
+        deadline: Date.now() + 600000,
       },
     ]);
     toast.success(REACT_TOAST.add);
@@ -47,7 +48,11 @@ function App() {
         اضافه کردن نوشته +
       </button>
       {write.map((items) => (
-        <StickyList key={items.id} onClose={() => removeMyNotes(items.id)} />
+        <StickyList
+          key={items.id}
+          deadline={items.deadline}
+          onClose={() => removeMyNotes(items.id)}
+        />
       ))}
       <Toaster />
     </>
